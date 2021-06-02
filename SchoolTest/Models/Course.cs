@@ -2,7 +2,7 @@
 
 namespace SchoolTest.Models
 {
-    public class Course
+    public class Course : BaseId
     {
         public ICollection<Student> Students { get ; set ; }
 
