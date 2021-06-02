@@ -28,7 +28,7 @@ namespace SchoolTest
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews();
-            services.AddDbContext<SchoolContext>(p => p.UseNpgsql(Configuration.GetConnectionString("")));
+            services.AddDbContext<SchoolContext>(p => p.UseNpgsql(Configuration.GetConnectionString("LocalConnection")));
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
