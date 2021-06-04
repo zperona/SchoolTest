@@ -13,6 +13,8 @@ namespace SchoolTest.Models
 
         public DateTime DoB { get; set; }
 
-        public Course Course { get; set; }
+        public Course Courses { get; set; }
+
+        public bool Active { get; set; }
     }
 }

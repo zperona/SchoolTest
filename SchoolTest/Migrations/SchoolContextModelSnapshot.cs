@@ -61,7 +61,10 @@ namespace SchoolTest.Migrations
                         .HasColumnType("integer")
                         .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
 
-                    b.Property<int?>("CourseId")
+                    b.Property<bool>("Active")
+                        .HasColumnType("boolean");
+
+                    b.Property<int?>("CoursesId")
                         .HasColumnType("integer");
 
                     b.Property<DateTime>("DoB")
@@ -85,9 +88,27 @@ namespace SchoolTest.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("CourseId");
+                    b.HasIndex("CoursesId");
 
                     b.ToTable("Students");
+
+                    b.HasData(
+                        new
+                        {
+                            Id = 1,
+                            Active = true,
+                            DoB = new DateTime(2000, 1, 23, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Spongebob",
+                            LastName = "Squarepants"
+                        },
+                        new
+                        {
+                            Id = 2,
+                            Active = true,
+                            DoB = new DateTime(2001, 4, 12, 0, 0, 0, 0, DateTimeKind.Unspecified),
+                            FirstName = "Patrick",
+                            LastName = "Starfish"
+                        });
                 });
 
             modelBuilder.Entity("SchoolTest.Models.Subject", b =>
@@ -157,11 +178,11 @@ namespace SchoolTest.Migrations
 
             modelBuilder.Entity("SchoolTest.Models.Student", b =>
                 {
-                    b.HasOne("SchoolTest.Models.Course", "Course")
+                    b.HasOne("SchoolTest.Models.Course", "Courses")
                         .WithMany("Students")
-                        .HasForeignKey("CourseId");
+                        .HasForeignKey("CoursesId");
 
-                    b.Navigation("Course");
+                    b.Navigation("Courses");
                 });
 
             modelBuilder.Entity("SchoolTest.Models.Subject", b =>

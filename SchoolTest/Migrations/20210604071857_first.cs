@@ -4,7 +4,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 
 namespace SchoolTest.Migrations
 {
-    public partial class Initial : Migration
+    public partial class first : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -31,7 +31,8 @@ namespace SchoolTest.Migrations
                     FirstName = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     LastName = table.Column<string>(type: "character varying(150)", maxLength: 150, nullable: true),
                     DoB = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    CourseId = table.Column<int>(type: "integer", nullable: true),
+                    CoursesId = table.Column<int>(type: "integer", nullable: true),
+                    Active = table.Column<bool>(type: "boolean", nullable: false),
                     Name = table.Column<string>(type: "character varying(50)", maxLength: 50, nullable: true),
                     Notes = table.Column<string>(type: "character varying(250)", maxLength: 250, nullable: true)
                 },
@@ -39,8 +40,8 @@ namespace SchoolTest.Migrations
                 {
                     table.PrimaryKey("PK_Students", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Students_Courses_CourseId",
-                        column: x => x.CourseId,
+                        name: "FK_Students_Courses_CoursesId",
+                        column: x => x.CoursesId,
                         principalTable: "Courses",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -112,15 +113,24 @@ namespace SchoolTest.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.InsertData(
+                table: "Students",
+                columns: new[] { "Id", "Active", "CoursesId", "DoB", "FirstName", "LastName", "Name", "Notes" },
+                values: new object[,]
+                {
+                    { 1, true, null, new DateTime(2000, 1, 23, 0, 0, 0, 0, DateTimeKind.Unspecified), "Spongebob", "Squarepants", null, null },
+                    { 2, true, null, new DateTime(2001, 4, 12, 0, 0, 0, 0, DateTimeKind.Unspecified), "Patrick", "Starfish", null, null }
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_CourseTeacher_TeachersId",
                 table: "CourseTeacher",
                 column: "TeachersId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Students_CourseId",
+                name: "IX_Students_CoursesId",
                 table: "Students",
-                column: "CourseId");
+                column: "CoursesId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Subjects_CourseId",

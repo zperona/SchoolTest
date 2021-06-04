@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using SchoolTest.Models;
+using System;
 
 namespace SchoolTest.Db
 {
@@ -19,6 +20,10 @@ namespace SchoolTest.Db
         {
             base.OnModelCreating(modelBuilder);
 
+            modelBuilder.Entity<Student>().HasData(
+               new Student() { Id = 1, FirstName = "Spongebob", LastName = "Squarepants", DoB = new DateTime(2000, 1, 23), Active = true },
+               new Student() { Id = 2, FirstName = "Patrick", LastName = "Starfish", DoB = new DateTime(2001, 4, 12), Active = true }
+               );
         }
     }
 }
